@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الشبكة</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #0b131e; color: white; padding: 20px; direction: rtl; }
+        .container { max-width: 500px; margin: auto; background: #1c2a38; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        input, select, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: none; box-sizing: border-box; }
+        button { background: #2ec4b6; color: white; font-weight: bold; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>لوحة تحكم الشبكة (إدارة الكروت)</h2>
+        <input type="text" id="pin" placeholder="رمز الكرت (PIN)">
+        <input type="text" id="category" placeholder="الفئة (مثلاً: 3 ساعات)">
+        <input type="number" id="price" placeholder="السعر">
+        <button onclick="addCard()">حفظ الكرت في المخزن</button>
+    </div>
+    <script>
+        function addCard() {
+            const data = {
+                pin: document.getElementById('pin').value,
+                category: document.getElementById('category').value,
+                price: document.getElementById('price').value
+            };
+            fetch('/api/add_card', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(res => alert(res.message));
+        }
+    </script>
+</body>
+</html>
